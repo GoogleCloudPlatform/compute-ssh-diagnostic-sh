@@ -1,0 +1,454 @@
+ :echo ####### GEE #########
+####### GEE #########
+ :grep -qw network
+ :echo
+ :[ 1 = 1 ]
+ :echo ### Network
+### Network
+ :/sbin/ifconfig
+eth0      Link encap:Ethernet  HWaddr 42:01:0a:f0:6c:93  
+          inet addr:10.240.108.147  Bcast:10.240.108.147  Mask:255.255.255.255
+          UP BROADCAST RUNNING MULTICAST  MTU:1460  Metric:1
+          RX packets:99225 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:71630 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:35662775 (34.0 MiB)  TX bytes:13736586 (13.1 MiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:3955 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:3955 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:690386 (674.2 KiB)  TX bytes:690386 (674.2 KiB)
+
+ :cat /etc/resolv.conf
+domain c.testproject.google.com.internal.
+search c.testproject.google.com.internal. 70795436982.google.internal. google.internal.
+nameserver 169.254.169.254
+nameserver 10.240.0.1
+ :egrep -v Generated|Completed
+ :/sbin/iptables-save
+ :/bin/netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         10.240.0.1      0.0.0.0         UG        0 0          0 eth0
+10.240.0.1      0.0.0.0         255.255.255.255 UH        0 0          0 eth0
+ :grep -v ^#
+ :cat /etc/hosts.deny
+
+ :echo
+
+ :echo ### SSH and meta server reach
+### SSH and meta server reach
+ :md5sum /usr/bin/ssh
+50226273f654d7a2d7b38a0b0c09def4  /usr/bin/ssh
+ :/usr/bin/env python
+ :cat
+tcp port 22 connected: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u1
+metaserver 169.254.169.254:80 connected
+ :egrep sshd|:22|PID
+ :/bin/netstat -lntpA inet
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1942/sshd       
+ :echo
+
+ :grep -qw metadata
+ :echo
+ :[ 1 = 1 ]
+ :echo ### Authorized meta
+### Authorized meta
+ :META1=/root/tmp-gee-87059.8086936.59121/authkeys1
+ :META2=/root/tmp-gee-87059.8086936.59121/authkeys2
+ :/usr/bin/curl -Sso /root/tmp-gee-87059.8086936.59121/authkeys1 http://metadata.google.internal/0.1/meta-data/authorized-keys
+ :/usr/sbin/traceroute apis.google.com
+traceroute to apis.google.com (173.194.78.138), 30 hops max, 60 byte packets
+ 1  wg-in-f138.1e100.net (173.194.78.138)  1.493 ms  1.524 ms  1.436 ms
+ :cat /root/tmp-gee-87059.8086936.59121/authkeys1
+testuser:ssh-rsa AAAA6vzVRyFyiRgq5bd5Y8timxanYZFzjgN7gepw3Pnt4lB3NzaC1yc2EAAAADAQABAAABAQCiHJ/i1oiqweqiweqowpi!12321331231233213123Aa2L5LwWA8CgZ4/ARMxjQT8Eg0eCrQbcuXhNtWovWUq7KjjJcR/uSVHGiKS3gkpp7yv+h9xl8D9gAK3vAwEjCkD9jhp4SihJfXiG7OHppimCQsecaqK8hfDy1JVjiPjRCi62TKtrij0IMnQDyWwVt1/2TWcpwLWTzuk6AHbMaDI/W58M2XdpTwCIXJkr4fziVI9VnGtjVSRZ7WfoZgJIbciZn6YE1NPewdPXOGIEjZdZdQBMHI5ZGJXKrlNsVQCJKv testuser@testuser-at-home.com
+ :/usr/share/google/get_metadata_value authorized_keys
+ :/usr/bin/diff -su /root/tmp-gee-87059.8086936.59121/authkeys1 /root/tmp-gee-87059.8086936.59121/authkeys2
+Files /root/tmp-gee-87059.8086936.59121/authkeys1 and /root/tmp-gee-87059.8086936.59121/authkeys2 are identical
+ :rm -f /root/tmp-gee-87059.8086936.59121/authkeys1 /root/tmp-gee-87059.8086936.59121/authkeys2
+ :grep -qw authkeys
+ :echo
+ :[ 1 = 1 ]
+ :echo ### Authorized keys
+### Authorized keys
+ :grep ^UID_MIN /etc/login.defs
+ :l=UID_MIN			 1000
+ :grep ^UID_MAX /etc/login.defs
+ :l1=UID_MAX			60000
+ :cut -d : -f 6
+ :awk -F: -v min=			 1000 -v max=			60000 { if ( $3 >= min && $3 <= max ) print $0} /etc/passwd
+ :HOMEDIRS=/home/testuser
+ :read homedir
+/home/testuser
+ :[ -f /home/cpst/.ssh/authorized_keys2 ]
+ :read homedir
+ :ssh-keygen -lf /home/testuser/.ssh/authorized_keys
+2048 60:cd:44:b4:67:d0:7f:b6:04:b0:37:88:28:ba:4e:fc  testuser@testuser-at-home.com (RSA)
+ :[ -f /home/ricc/.ssh/authorized_keys2 ]
+ :read homedir
+ :grep -qw sshdconf
+ :echo
+ :[ 1 = 1 ]
+ :echo /etc/ssh/sshd_config
+/etc/ssh/sshd_config
+ :grep -v PasswordAuthentication
+ :grep -v PermitRootLogin
+ :grep -v Port
+ :egrep -v ^#|^$ /etc/ssh/sshd_config
+ :cat
+ :SSHD_OPTIONS=-d -f /root/tmp-gee-87059.8086936.59121/ssh/sshd_config -o 'AuthorizedKeysFile /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys'
+ :grep -qw sshd
+ :echo
+ :[ 1 = 1 ]
+ :ls -ldZ /root/.ssh
+drwx------ 2 root root ? 4096 Jun 25 10:50 /root/.ssh
+ :ls -lZ /root/.ssh
+ :grep -v debug1: rexec_argv
+ :xargs timeout 5m /usr/sbin/sshd
+ :echo -d -f /root/tmp-gee-87059.8086936.59121/ssh/sshd_config -o 'AuthorizedKeysFile /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys'
+total 8
+-rw-r--r-- 1 root root ?   1 Jun 25 10:50 authorized_keys2
+-rw-r--r-- 1 root root ? 222 Jun 24 13:45 known_hosts
+ :KEY=/root/tmp-gee-87059.8086936.59121/ssh/test-key
+ :ssh-keygen -q -f /root/tmp-gee-87059.8086936.59121/ssh/test-key -N  -t dsa -V +2m
+ :echo -e \n\n
+ :echo -n from="127.0.0.1",command="/bin/echo" 
+ :cat /root/tmp-gee-87059.8086936.59121/ssh/test-key.pub
+ :chmod 0600 /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys
+ :ssh -v -p 3562 -i /root/tmp-gee-87059.8086936.59121/ssh/test-key -o StrictHostKeyChecking=no localhost echo 2>&1
+OpenSSH_6.0p1 Debian-4+deb7u1, OpenSSL 1.0.1e 11 Feb 2013
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 19: Applying options for *
+debug1: Connecting to localhost [127.0.0.1] port 3562.
+debug1: Connection established.
+debug1: permanently_set_uid: 0/0
+debug1: identity file /root/tmp-gee-87059.8086936.59121/ssh/test-key type 2
+debug1: Checking blacklist file /usr/share/ssh/blacklist.DSA-1024
+debug1: Checking blacklist file /etc/ssh/blacklist.DSA-1024
+debug1: identity file /root/tmp-gee-87059.8086936.59121/ssh/test-key-cert type -1
+debug1: Remote protocol version 2.0, remote software version OpenSSH_6.0p1 Debian-4+deb7u1
+debug1: match: OpenSSH_6.0p1 Debian-4+deb7u1 pat OpenSSH*
+debug1: Enabling compatibility mode for protocol 2.0
+debug1: Local version string SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u1
+debug1: SSH2_MSG_KEXINIT sent
+debug1: SSH2_MSG_KEXINIT received
+debug1: kex: server->client aes128-ctr hmac-md5 none
+debug1: kex: client->server aes128-ctr hmac-md5 none
+debug1: sending SSH2_MSG_KEX_ECDH_INIT
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug1: Server host key: ECDSA 05:10:20:80:be:f8:4d:e5:3a:67:8c:49:d6:44:65:e8
+debug1: Host '[localhost]:3562' is known and matches the ECDSA host key.
+debug1: Found key in /root/.ssh/known_hosts:1
+debug1: ssh_ecdsa_verify: signature correct
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug1: SSH2_MSG_NEWKEYS received
+debug1: Roaming not allowed by server
+debug1: SSH2_MSG_SERVICE_REQUEST sent
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug1: Authentications that can continue: publickey
+debug1: Next authentication method: publickey
+debug1: Offering DSA public key: /root/tmp-gee-87059.8086936.59121/ssh/test-key
+debug1: Server accepts key: pkalg ssh-dss blen 434
+debug1: read PEM private key done: type DSA
+debug1: Authentication succeeded (publickey).
+Authenticated to localhost ([127.0.0.1]:3562).
+debug1: channel 0: new [client-session]
+debug1: Requesting no-more-sessions@openssh.com
+debug1: Entering interactive session.
+debug1: sshd version OpenSSH_6.0p1 Debian-4+deb7u1
+debug1: read PEM private key done: type RSA
+debug1: Checking blacklist file /usr/share/ssh/blacklist.RSA-2048
+debug1: Checking blacklist file /etc/ssh/blacklist.RSA-2048
+debug1: private host key: #0 type 1 RSA
+debug1: read PEM private key done: type DSA
+debug1: Checking blacklist file /usr/share/ssh/blacklist.DSA-1024
+debug1: Checking blacklist file /etc/ssh/blacklist.DSA-1024
+debug1: private host key: #1 type 2 DSA
+debug1: read PEM private key done: type ECDSA
+debug1: Checking blacklist file /usr/share/ssh/blacklist.ECDSA-256
+debug1: Checking blacklist file /etc/ssh/blacklist.ECDSA-256
+debug1: private host key: #2 type 3 ECDSA
+Set /proc/self/oom_score_adj from -1000 to -1000
+debug1: Bind to port 3562 on 0.0.0.0.
+Server listening on 0.0.0.0 port 3562.
+debug1: Bind to port 3562 on ::.
+Server listening on :: port 3562.
+debug1: Server will not fork when running in debugging mode.
+debug1: rexec start in 5 out 5 newsock 5 pipe -1 sock 8
+debug1: inetd sockets after dupping: 3, 3
+Connection from 127.0.0.1 port 50227
+debug1: Client protocol version 2.0; client software version OpenSSH_6.0p1 Debian-4+deb7u1
+debug1: match: OpenSSH_6.0p1 Debian-4+deb7u1 pat OpenSSH*
+debug1: Enabling compatibility mode for protocol 2.0
+debug1: Local version string SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u1
+debug1: permanently_set_uid: 102/65534 [preauth]
+debug1: list_hostkey_types: ssh-rsa,ssh-dss,ecdsa-sha2-nistp256 [preauth]
+debug1: SSH2_MSG_KEXINIT sent [preauth]
+debug1: SSH2_MSG_KEXINIT received [preauth]
+debug1: kex: client->server aes128-ctr hmac-md5 none [preauth]
+debug1: kex: server->client aes128-ctr hmac-md5 none [preauth]
+debug1: expecting SSH2_MSG_KEX_ECDH_INIT [preauth]
+debug1: SSH2_MSG_NEWKEYS sent [preauth]
+debug1: expecting SSH2_MSG_NEWKEYS [preauth]
+debug1: SSH2_MSG_NEWKEYS received [preauth]
+debug1: KEX done [preauth]
+debug1: userauth-request for user root service ssh-connection method none [preauth]
+debug1: attempt 0 failures 0 [preauth]
+debug1: user root matched 'User root' at line 31
+debug1: connection from 127.0.0.1 matched 'Address 127.0.0.1' at line 31
+debug1: PAM: initializing for "root"
+debug1: PAM: setting PAM_RHOST to "127.0.0.1"
+debug1: PAM: setting PAM_TTY to "ssh"
+debug1: userauth-request for user root service ssh-connection method publickey [preauth]
+debug1: attempt 1 failures 0 [preauth]
+debug1: test whether pkalg/pkblob are acceptable [preauth]
+debug1: Checking blacklist file /usr/share/ssh/blacklist.DSA-1024
+debug1: Checking blacklist file /etc/ssh/blacklist.DSA-1024
+debug1: temporarily_use_uid: 0/0 (e=0/0)
+debug1: trying public key file /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys
+debug1: fd 4 clearing O_NONBLOCK
+debug1: matching key found: file /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys, line 1
+Found matching DSA key: 2c:31:2c:38:36:ca:8e:d8:a0:1a:3e:25:ef:0d:5c:d0
+debug1: restore_uid: 0/0
+Postponed publickey for root from 127.0.0.1 port 50227 ssh2 [preauth]
+debug1: userauth-request for user root service ssh-connection method publickey [preauth]
+debug1: attempt 2 failures 0 [preauth]
+debug1: Checking blacklist file /usr/share/ssh/blacklist.DSA-1024
+debug1: Checking blacklist file /etc/ssh/blacklist.DSA-1024
+debug1: temporarily_use_uid: 0/0 (e=0/0)
+debug1: trying public key file /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys
+debug1: fd 4 clearing O_NONBLOCK
+debug1: matching key found: file /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys, line 1
+Found matching DSA key: 2c:31:2c:38:36:ca:8e:d8:a0:1a:3e:25:ef:0d:5c:d0
+debug1: restore_uid: 0/0
+debug1: ssh_dss_verify: signature correct
+Root login accepted for forced command.
+debug1: do_pam_account: called
+Accepted publickey for root from 127.0.0.1 port 50227 ssh2
+Root login accepted for forced command. [preauth]
+debug1: monitor_read_log: child log fd closed
+debug1: monitor_child_preauth: root has been authenticated by privileged process
+debug1: PAM: establishing credentials
+debug1: Entering interactive session for SSH2debug1: Remote: Forced command.
+debug1: Remote: Forced command.
+debug1: Sending environment.
+debug1: Sending command: echo 2>&1
+debug1: SELinux support disabled
+debug1: PAM: reinitializing credentials
+debug1: permanently_set_uid: 0/0
+Environment:
+  USER=root
+  LOGNAME=root
+  HOME=/root
+  PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11
+  MAIL=/var/mail/root
+  SHELL=/bin/bash
+  SSH_CLIENT=127.0.0.1 50227 3562
+  SSH_CONNECTION=127.0.0.1 50227 127.0.0.1 3562
+  SSH_ORIGINAL_COMMAND=echo 2>&1
+
+debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
+debug1: client_input_channel_req: channel 0 rtype eow@openssh.com reply 0
+debug1: channel 0: free: client-session, nchannels 1
+debug1: fd 1 clearing O_NONBLOCK
+Transferred: sent 2728, received 2976 bytes, in 0.0 seconds
+Bytes per second: sent 67784.7, received 73947.0
+debug1: Exit status 0
+ :echo >>> SSH localhost login succcess
+>>> SSH localhost login succcess
+ :rm -f /root/tmp-gee-87059.8086936.59121/ssh/test-key /root/tmp-gee-87059.8086936.59121/ssh/test-key.pub
+.
+debug1: server_init_dispatch_20
+debug1: server_input_channel_open: ctype session rchan 0 win 2097152 max 32768
+debug1: input_session_request
+debug1: channel 0: new [server-session]
+debug1: session_new: session 0
+debug1: session_open: channel 0
+debug1: session_open: session 0: link with channel 0
+debug1: server_input_channel_open: confirm session
+debug1: server_input_global_request: rtype no-more-sessions@openssh.com want_reply 0
+debug1: server_input_channel_req: channel 0 request exec reply 1
+debug1: session_by_channel: session 0 channel 0
+debug1: session_input_channel_req: session 0 req exec
+debug1: Forced command (config) '/bin/echo'
+debug1: Received SIGCHLD.
+debug1: session_by_pid: pid 17062
+debug1: session_exit_message: session 0 channel 0 pid 17062
+debug1: session_exit_message: release channel 0
+Received disconnect from 127.0.0.1: 11: disconnected by user
+debug1: do_cleanup
+debug1: PAM: cleanup
+debug1: PAM: closing session
+debug1: PAM: deleting credentials
+xargs: timeout: exited with status 255; aborting
+ :rm -f /root/tmp-gee-87059.8086936.59121/ssh/sshd_config
+ :rm -f /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys
+ :echo
+
+ :grep -qw sys
+ :echo
+ :[ 1 = 1 ]
+ :echo ### System, filesystem, memory
+### System, filesystem, memory
+ :[ -f /usr/bin/lsb_release ]
+ :/usr/bin/lsb_release -a
+No LSB modules are available.
+Distributor ID:	Debian
+Description:	Debian GNU/Linux 7.5 (wheezy)
+Release:	7.5
+Codename:	wheezy
+ :/bin/uname -a
+Linux test1 3.2.0-4-amd64 #1 SMP Debian 3.2.57-3+deb7u2 x86_64 GNU/Linux
+ :/bin/mount
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+udev on /dev type devtmpfs (rw,relatime,size=10240k,nr_inodes=474010,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,noexec,relatime,size=380364k,mode=755)
+/dev/disk/by-uuid/db891c02-ae4f-4d0e-871d-1e86892fbb81 on / type ext4 (rw,relatime,user_xattr,barrier=0,data=ordered)
+tmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)
+tmpfs on /run/shm type tmpfs (rw,nosuid,nodev,noexec,relatime,size=760720k)
+ :cat /etc/fstab
+# UNCONFIGURED FSTAB FOR BASE SYSTEM
+LABEL=/   /     ext4    defaults,barrier=0 1 1
+ :/bin/mount -fav
+ :echo
+
+ :/bin/df -l -x tmpfs -P
+Filesystem                                             1024-blocks   Used Available Capacity Mounted on
+rootfs                                                    10320184 833996   8961952       9% /
+udev                                                         10240      0     10240       0% /dev
+/dev/disk/by-uuid/db891c02-ae4f-4d0e-871d-1e86892fbb81    10320184 833996   8961952       9% /
+ :ls /
+authorized_keys
+bin
+boot
+dev
+etc
+home
+initrd.img
+lib
+lib64
+media
+mnt
+opt
+proc
+root
+run
+sbin
+selinux
+srv
+sys
+tmp
+usr
+var
+vmlinuz
+ :free -k
+             total       used       free     shared    buffers     cached
+Mem:       3803636     451864    3351772          0      43736     302696
+-/+ buffers/cache:     105432    3698204
+Swap:            0          0          0
+ :/usr/bin/uptime
+ 12:23:38 up 1 day, 11 min,  2 users,  load average: 0.00, 0.01, 0.05
+ :echo
+
+ :grep -qw usersec
+ :echo
+ :[ 1 = 1 ]
+ :echo ### Users and security
+### Users and security
+ :cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/bin/sh
+bin:x:2:2:bin:/bin:/bin/sh
+sys:x:3:3:sys:/dev:/bin/sh
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/bin/sh
+man:x:6:12:man:/var/cache/man:/bin/sh
+lp:x:7:7:lp:/var/spool/lpd:/bin/sh
+mail:x:8:8:mail:/var/mail:/bin/sh
+news:x:9:9:news:/var/spool/news:/bin/sh
+uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
+proxy:x:13:13:proxy:/bin:/bin/sh
+www-data:x:33:33:www-data:/var/www:/bin/sh
+backup:x:34:34:backup:/var/backups:/bin/sh
+list:x:38:38:Mailing List Manager:/var/list:/bin/sh
+irc:x:39:39:ircd:/var/run/ircd:/bin/sh
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
+nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
+libuuid:x:100:101::/var/lib/libuuid:/bin/sh
+ntp:x:101:103::/home/ntp:/bin/false
+sshd:x:102:65534::/var/run/sshd:/usr/sbin/nologin
+testuser:x:1001:1001::/home/testuser:/bin/bash
+ :md5sum /usr/share/google/google_daemon/manage_accounts.py
+04273c8e606f249a72aa661235571429  /usr/share/google/google_daemon/manage_accounts.py
+ :ps -C manage_accounts.py -C startpar uw
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root      2056  0.0  0.0   4096   624 ?        Ss   Jun24   0:00 startpar -f -- google-accounts-manager
+root      2059  0.0  0.1  47160  7228 ?        S    Jun24   0:00 /usr/bin/python /usr/share/google/google_daemon/manage_accounts.py --daemon
+root     16972  0.0  0.2  47860  8648 ?        S    12:21   0:00 /usr/bin/python /usr/share/google/google_daemon/manage_accounts.py --daemon
+ :/usr/sbin/visudo -c
+/etc/sudoers: parsed OK
+/etc/sudoers.d/README: parsed OK
+ :egrep -v ^#|^$
+ :cat /etc/sudoers
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+root	ALL=(ALL:ALL) ALL
+%sudo	ALL=(ALL:ALL) ALL
+testuser ALL=NOPASSWD: ALL
+ :egrep -v ^#|^$
+ :cat /etc/selinux/semanage.conf
+module-store = direct
+ :[ -f /usr/bin/faillog ]
+ :grep -v ^$
+ :echo 60000
+ :/usr/bin/faillog -a -u 1000-60000
+Login       Failures Maximum Latest                   On
+testuser       0        0   01/01/70 00:00:00 +0000  
+ :grep -qw traceroute
+ :echo
+ :[ 1 = 1 ]
+ :/usr/sbin/traceroute -n au.pool.ntp.org
+traceroute to au.pool.ntp.org (202.127.210.37), 30 hops max, 60 byte packets
+ 1  216.239.47.74  365.395 ms 209.85.248.70  370.685 ms 216.239.47.86  0.951 ms
+ 2  216.239.47.76  357.385 ms 216.239.47.74  365.217 ms 209.85.248.70  372.218 ms
+ 3  216.239.47.74  365.398 ms  366.948 ms 209.85.248.70  371.261 ms
+ 4  216.239.47.76  359.136 ms 216.239.47.86  0.899 ms 209.85.248.70  370.874 ms
+ 5  216.239.47.76  357.644 ms 216.239.47.74  365.012 ms 216.239.47.76  358.453 ms
+ 6  216.239.47.86  0.882 ms 216.239.47.74  366.361 ms 216.239.47.86  0.566 ms
+ 7  216.239.47.76  357.867 ms 216.239.47.86  7.280 ms 216.239.47.74  364.303 ms
+ 8  209.85.248.70  369.872 ms  369.632 ms 216.239.47.74  364.880 ms
+ 9  66.249.95.172  6.691 ms 72.14.238.17  6.414 ms 72.14.242.167  6.338 ms
+10  72.14.235.89  89.387 ms  89.458 ms 64.233.175.38  89.281 ms
+11  209.85.246.37  110.783 ms  110.764 ms 72.14.232.73  107.724 ms
+12  72.14.239.209  144.059 ms  143.777 ms  143.968 ms
+13  72.14.239.12  143.762 ms 209.85.250.126  144.613 ms 72.14.239.12  143.825 ms
+14  72.14.233.165  144.166 ms  144.357 ms 72.14.238.131  144.645 ms
+15  209.85.250.124  259.703 ms 209.85.250.228  260.051 ms 209.85.250.124  261.982 ms
+16  66.249.95.167  370.679 ms 209.85.249.53  363.461 ms 66.249.95.167  358.571 ms
+17  66.249.95.225  361.676 ms 66.249.95.233  358.490 ms  358.021 ms
+18  202.7.171.189  368.117 ms  366.640 ms 203.26.20.253  362.967 ms
+19  203.219.35.15  362.448 ms  362.565 ms 203.26.22.61  362.116 ms
+20  203.161.136.1  362.992 ms  365.771 ms 203.219.35.79  360.261 ms
+21  121.101.138.212  366.064 ms  366.253 ms 203.161.136.1  362.778 ms
+22  121.101.138.212  366.099 ms  365.864 ms 121.101.138.171  370.846 ms
+23  121.101.138.171  372.755 ms 121.101.138.156  377.219 ms  377.065 ms
+24  121.101.138.207  375.652 ms  376.341 ms 121.101.138.156  378.001 ms
+25  203.161.146.182  377.256 ms  376.407 ms 121.101.138.207  372.891 ms
+26  203.161.146.182  376.917 ms *  373.996 ms
+27  * * *
+28  * * *
+29  * * *
+30  * * *
+ :echo
+
+ :rm -rf /root/tmp-gee-87059.8086936.59121
+ :echo ### == DONE ==
+### == DONE ==
