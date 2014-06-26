@@ -15,4 +15,4 @@ once the instance is up.
 
 you may use deploy.sh to deploy a modified version of this script to your own GCS bucket
 redefining the ACCOUNT PROJECT BUCKET variables in the script and calling your addinstance
-with ttp://storage.googleapis.com/[YOUR_BUCKET]/gee.sh defined as startup script.
+with http://storage.googleapis.com/[YOUR_BUCKET]/gee.sh defined as startup script.
