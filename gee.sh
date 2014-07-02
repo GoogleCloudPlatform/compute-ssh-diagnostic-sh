@@ -21,6 +21,10 @@
 # WARNING! this tool by default exposing potentially sensitive data to Google Support
 # use the --skip flag to supress some sections of the output or change logging $OUTPUT
 #
+# Alternatively if network connection to cloud storage is still working the output 
+# can be directed to a file and that copied across after running the tool, 
+# which file than can be trimmed by the customer before sending it to the support team.
+#
 # the flags are not handled with getops to remain POSIX and portable
 OUTPUT=default
 FORCE=0
