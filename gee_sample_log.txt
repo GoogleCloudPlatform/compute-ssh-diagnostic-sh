@@ -9,22 +9,22 @@
 eth0      Link encap:Ethernet  HWaddr 42:01:0a:f0:6c:93  
           inet addr:10.240.108.147  Bcast:10.240.108.147  Mask:255.255.255.255
           UP BROADCAST RUNNING MULTICAST  MTU:1460  Metric:1
-          RX packets:99225 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:71630 errors:0 dropped:0 overruns:0 carrier:0
+          RX packets:379684 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:352264 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000 
-          RX bytes:35662775 (34.0 MiB)  TX bytes:13736586 (13.1 MiB)
+          RX bytes:94410397 (90.0 MiB)  TX bytes:52994414 (50.5 MiB)
 
 lo        Link encap:Local Loopback  
           inet addr:127.0.0.1  Mask:255.0.0.0
           UP LOOPBACK RUNNING  MTU:16436  Metric:1
-          RX packets:3955 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:3955 errors:0 dropped:0 overruns:0 carrier:0
+          RX packets:4023 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4023 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:0 
-          RX bytes:690386 (674.2 KiB)  TX bytes:690386 (674.2 KiB)
+          RX bytes:700351 (683.9 KiB)  TX bytes:700351 (683.9 KiB)
 
  :cat /etc/resolv.conf
-domain c.testproject.google.com.internal.
-search c.testproject.google.com.internal. 70795436982.google.internal. google.internal.
+domain c.slatch.google.com.internal.
+search c.slatch.google.com.internal. 70795436982.google.internal. google.internal.
 nameserver 169.254.169.254
 nameserver 10.240.0.1
  :egrep -v Generated|Completed
@@ -58,18 +58,28 @@ tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      
  :[ 1 = 1 ]
  :echo ### Authorized meta
 ### Authorized meta
- :META1=/root/tmp-gee-87059.8086936.59121/authkeys1
- :META2=/root/tmp-gee-87059.8086936.59121/authkeys2
- :/usr/bin/curl -Sso /root/tmp-gee-87059.8086936.59121/authkeys1 http://metadata.google.internal/0.1/meta-data/authorized-keys
+ :META1=/root/tmp-gee-769220.82768633.33139/authkeys1
+ :META2=/root/tmp-gee-769220.82768633.33139/authkeys2
+ :/usr/bin/curl -Sso /root/tmp-gee-769220.82768633.33139/authkeys1 http://metadata.google.internal/0.1/meta-data/authorized-keys
  :/usr/sbin/traceroute apis.google.com
-traceroute to apis.google.com (173.194.78.138), 30 hops max, 60 byte packets
- 1  wg-in-f138.1e100.net (173.194.78.138)  1.493 ms  1.524 ms  1.436 ms
- :cat /root/tmp-gee-87059.8086936.59121/authkeys1
-testuser:ssh-rsa AAAA6vzVRyFyiRgq5bd5Y8timxanYZFzjgN7gepw3Pnt4lB3NzaC1yc2EAAAADAQABAAABAQCiHJ/i1oiqweqiweqowpi!12321331231233213123Aa2L5LwWA8CgZ4/ARMxjQT8Eg0eCrQbcuXhNtWovWUq7KjjJcR/uSVHGiKS3gkpp7yv+h9xl8D9gAK3vAwEjCkD9jhp4SihJfXiG7OHppimCQsecaqK8hfDy1JVjiPjRCi62TKtrij0IMnQDyWwVt1/2TWcpwLWTzuk6AHbMaDI/W58M2XdpTwCIXJkr4fziVI9VnGtjVSRZ7WfoZgJIbciZn6YE1NPewdPXOGIEjZdZdQBMHI5ZGJXKrlNsVQCJKv testuser@testuser-at-home.com
+ :cat /root/tmp-gee-769220.82768633.33139/authkeys1
+sub:ssh-dss AAAAB3NzaC1kc3MAAACBAPdA2F/tW8wzenZ+NblZYfzrYvclp1HsDbESaQH0KKJt0Yy8kteYQL/aKrcC3VXJgBA4+oYvcnWs1jKtCEUmN81I/zVk3+5U6LyzfrgnB+bqCZ1FPQSt6ryDu7eLnGOpb00IjzN/Y5qcCbS7zd2UXUkpDw5l1HU+crjZ6fn3wRHDAAAAFQDvWwYYyxWicTuQEd9FL4LdbbcVfwAAAIEAhVwKn47oitWV1bXmfiklKeCAkRcc5GeHijgSeviAY70eYOTAgfyLdPmgfVDDuk2RgqK3WSWA/PZf2EnOeItGkK5qn9u1x/oTbiwNrkR0lOvi7OEBdf1M8bYrOTLdpO76ibjmZqN2DRTxkRIExmLdiDF51hY04DzUr8Pex7j/y34AAACBAJsyCZrEwIbzoFlRleslAtT+GTA5uwVI7s0sPsCGpfai7TAC8LQpDBfQ0pPqER/4ESoBWfpvro1Qn06tdWWMEmwbLuBR8tIJ01IUoG/gsmLoWJg+KP72vOFc/prhqlml/5SxOeChSFr/5lbVwnSGo9k76NzJvugNhV8n82LrOFHi sub@submonster.syd.corp.google.com
+sub:ssh-dss AAAAB3NzaC1kc3MAAACBAKsz6bl0g0saiRE7dph1nCAqsA2GlyLP5a5UyvUs8PXdMsbi397Xnn+rUghPwKvVHrs0L0q1see3TnykU90C0CSInYFqz87SlbpNFgLJQdqTJ860huJ9J2clFL4ka73MfNrMeX9NSR2aydQRcD3ZxNfGdxYv5hybFo3OWtVVrB2jAAAAFQDwBhWUWbT/GrHRabgIW4Zx1XkrcQAAAIAtr0L0nn/cV1FomN+P09w+8aBvbIXNwzs4wabktMMXu33Jgw7x0uoH6bEfZ3VX8MR9c+OI6ZN6ihNaJytopEswEYV2OWjMoUxhulOeDtUGQvO+VvrHxwj0M+vnPX25EKZWjaXYwlGVZ6InCv+bsdAQZoIAyF3QAZqN3qcT2FIo1AAAAIBF5oJkklUY/98/yTjReQU/14VTVW8JDIUZGfuSoaGQg7b2wlbpnHI0M55GUqN+0HXMhX9VJj6sr1hF2nDu6UidPnFN5JMQ3S4QnTneC+EdRtYSgtGy1kN3aW3+TebtB+hYIi0LvS3BsVdV58LRJceo8qdaspMWRN6EtZGFoHyRZw== sub@MacBook
+cpst:ssh-dss AAAAB3NzaC1kc3MAAACBANxbfEu7y95ogB2UuPAoNJRoavIU2hgQsny8l575436hQemxxTf5VkBGvvTQakWAaIh0pkw3DbDL4dZcTqzFaWoa1aHc+pU0AZ+1NbOoVwANAgupzrzMbuGEpJhKgN90aXUo5WTOpylD+v/F3+4PeyEZQH3vmSO+fA3aZ1dl88TlAAAAFQC2NzobfuXQRDFWlHjqS3ZEdNHoYwAAAIAOW25dGH/K3wDvga1laJGah34AURV8jmjdAybjEIgJBiSmCxhLa69SoSIl6lQ4/duqKDzsO80LyEogudY7GIto3DCtxhIJlFQHXx6JL2X13zKnewS+AzjiS+wwSk9yrSfCCRHtNg9H73ZDZ96oRSE52l13TiB8T+Qu+QzBps8E/wAAAIBp+G7HKBtw0s/XvYc3QDdQ4tLgcqr0UYJ2v+TIQlCVrP0IjUZYhedK64CBFLAGOuHTNGeBZNhMvNb1Maz0dLee5O5u+OHXU3H4acJJR1wl6qfdo8YVj8RfouREY69B6XdzYcGEDbH6NKgqZ72zauvBtY7TNwFepNyIad2ce648cA== cloud-platform-support-team@google
+sub:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDazHNtoDWVgZYXk88vuDyHeDOjcOCsFdko8UGpBp5pOaR9K1BcaSuPrXKzkxR3eYQb2BVQDXCv4CAEBseLX+r9a5I0nL/HqlOZPCKnMWVtS2dBeq6OdiYUiqK5X+/YOv9pP30mfdAOQYXAOenWlWBIdXt4XwekyzySWUF6k+8LOmh1GCtH0mjBuKnJiSFPAmGevMIROMkjTGlpeaIC2etS6Khx8wd8YruYrc35TaGeRIvpaVhu108ZS8ycsAMAzurxOxLOCp0/GBF5Gq96uRxShQxrxmtczubwIW8CDY5FZOzKkm4HLNuW5Ya1XJdBovjPvoASmQx/vSiXeubzggg9 sub@submonster.syd.corp.google.com
+sub:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1toVYw4j6HnLvNE/gcAt1BHYAt2IAMXI2D6HYY07WEUGfClV/fF6CKStN0konpx3W9pbWncRUizkxmXrodZEEeLCag/YmeTICe7ol1KnJEzt+gSP+nMCGIYl0c5coj1Pv+ntYMR0B6WIFqPkEHNx4SHWx8TNG357IXBqgG5bs1Ppvhs4dOM85E4VfnobkUKKt5MO9jVgJO/n0ddrLopGwYgs3bWYYN8hy+97xlO3Kt5zlQ4MeiJ4i3ocYqu3hQCKAJjMH6v629fq8/CzVZdKMc6MmgDPOmGaIZ35D8QH70G70pc5guXiD05tFGt0/rgTzHJPnDbBUvHTH1x/HSVID sub@submonster.syd.corp.google.com
+sub:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHRPNem7DE56KHVt/h3p6l6vY/IH9IT7GpVPIRgoV/IFnJcZDdEIYsNdW8QML74Yrv0QIM53HHZP/dX1D4vyC7O2df1IeW5d45N6tcmc7Hh0qIoY9wAAqrdiGr84MRZAlnccEWuenvqjuKQEuC5ASBbH2Mr7HWjMKqvMm6cQ2zvpSESRfOn/ONeGFmlAu5jSDWd7bUnTLwUlSBK7OMICeTV2c29H8we49L/ToT8EKk/IJ8e/IbMGS1ZCwiFnbOzNSF8CQ8w+MP8pP0m7f9t8iA3pcJz30H6OkIY39rt8vvzp8WqjSrVvuXg870SfdpNYl/czCvax7bjw/JyZqlG1P1 sub@parker
+sub:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4fi/tvPJpXCGLZmyYS1PyB+Re6kx7gO/zwNS5BiC977TyY3uz+wF1VKceuOdBIul2H3hWvxl1Iomxh4QOvRTgwJrp9tZP09dE5pehqL4hQNQQFVwP323hLcN3eYWNXzucnutlBTdHD/ol9ofyKzKtjkj8zP4CJ3OUhDhFiwR16VLjPT5FmREd5wS9VFAyDuyYZTcYLJbgZyOqR/jRBFjHdjpO/0IdKWDuz47mtiZo/nR/bUJEGLmru6PHTIYcMGlwXn/egNLYJGqArCuyd8zHy6raLzWDECUcp6eOkIWVK08LUcNiP+uTfKGB4x5oycH76VHlc0iGzbKxGwCa/2kT sub@nami.local
+ricc:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDNDHuxo2XOtqOfjYj/9uBwLqCztqimn3F/wioLfts0fip9LbHGX7Ahzm8sS/C2dxpSkmtRxOeqRirbPycTHYBRTRm+pF1jIETYA70+lsNZNRAJzBlaSJidfPyPiRixKZVcg23Tv8ZnvKGMiC15dQQgVW2xBcu6CVHUziKKZMvsmp86EvRa2PH2NdCywL5AYgbdETdpWFUbXm0OWcbzHrsr6CS9bv/+i6Gvs4Rthi2F+7HNEqdPHbrRHs7rfSzOz6sfbO5mUSTRIvOVpMQmxcW2YZ3oKjXNE1ES5w1XtqBahMpXgH+rFk2H5BZjN21jp1U9GIWLITHf8hIbsDQaJGlr ricc@derek.dub.corp.google.com
+josselinc:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCiHJ/i1Ny2bIc5znUuArn5uFQ7ARGMbyflsx5TkiDyAa2L5LwWA8CgZ4/ARMxjQT8Eg0eCrQbcuXhNtWovWUq7KjjJcR/uSVHGiKS3gkpp7yv+h9xl8D9gAK3vAwEjCkD9jhp4SihJfXiG7OHppimCQsecaqK8hfDy1JVjiPjRCi62TKtrij0IMnQDyWwVt1/2TWcpwLWTzuk6AHbMaDI/W58M2XdpTwCIXJkr4fziVI9VnGtjVSRZ7WfoZgJIbciZn6YE1NPewdPXOGIEjZdZdQB6vzVRyFyiRgq5bd5Y8timxanYZFzjgN7gepw3Pnt4lMHI5ZGJXKrlNsVQCJKv josselinc@josselinc-m91-l.syd.corp.google.com
+josselinc:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDnpaDwdtCi5A4nIZfYKDEnIGw1xvF6p/x5X3YcYohwdYaesFSB5rhKsZCj0ZHGOG20/bfiSwzpBDlCfNZtIgspUG9VaBMi85UEzzhB1np3KMR8wpYRFPjJ5PVAXH5dRKe7Yx39I1EcijCMn3H/unf814lTvwFVcNRVusaSUZYmngHJSfX0raGXoCWR6EjS71+bN4F5iY45npfQJimqJu/meeB7YKdeWQr+j9hO7tuMTlC2ft5XQNWW+a4Cjdlnyhfxkiq0O75q/cPAHhJMu/2YnY96Z4JUtbKsvkkOejFh/fUeG25OXLR+/4aQevjwPZGKoUQTwJ8CMXY8nEJrDSe3 josselinc@hs-ghfs-nn
+sub:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDc2TMs9h2c9EZAdroC/CI6yuKCP4tcIAt1aIa6JAed9tAjNhPK3srbl8GPsP8xO+AkzPqwLHdaaCTmky109Uqm0fKWy69hU5LZ7c3CeERnNUGW8tQMnHWDcGISJFtxahRTpTW3iluTEhGuqbKRY/X8bR3MKE2LIOS7MgbQCzkjU1FnFqTFnrPokT/WALDQEj496yoSbqi5Z22sWSH5PJbFykfrfdfUvfy1wfpvvKaXR0D2Sxfvrq2B9EE4QWM7E2NpwcpGhfwLIzx8PdVSPhuULHEzOGPo5HpaTFTWxhAO+eU44ugKuxgVpM0ZwqOW0i98Z07iRL8GVgbvebf345V1 sub@nami.roam.corp.google.com
+gceadmin:ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEA0sPvvbcgltS874ky5iheOC0fcexmrLEFFX3vfBYi3qzAD4hkFpk2K/UK9sCYNB9RObkZrHcKGBL2eNjLM1Hi7K8/MtCVqrsF5MdpDj3+UVNVcMsQVQvTiqU9K5DLEeFYmM+soSTzpiCTc9ch5pLjGTgC/wztAW1MSRBwwqpowg00YzKkiw5LY/FA3icUXl7Avq6M8hOpIZpTpOasprGVg675j0NazidFv2/lHsPWPmMkdi7A2/7dfU1yW1IWsjKiJ8tNfFAY/2u9qP7/2xQwUvNIKlWARiFN6OMZqIG0LmEe53uKXXWagtbh8GnoDp03dbbZR9H5JOk89XJAo4HHCw== gceadmin@SOURCE-WINDOWS
+gceadmin:ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAqzVD4ySo+S3sFH8CA1/bAPoUMgGqHn5H7w5+IsvrPVCWah+uadS8t70DZFF7eNcSJI4pB1wXSaLe4z+i+4oRHhtTleBRHWLT8vZ0IBq+nFEABZd+RGLZcSedOlisNWW7YAR7EqEotI5UPvvmrWaaUQAip5FQeA/CTaI7Rrz8D51xm6lFa7Bq5Gmb4pGZ3kKtrklXqdftH/RUgYG8wobvZn/+5ex0PjVfvW3QhRMHtbcm0B1NU0PzOvKPuxMXTOrUvCYPoFx9X2bEVHAMe0/Z/t9DIgqjabx1syz8JxtPeXlTAjEK1+KRiGrzmyC9wsceUwSAVrfGySp+Nn0tdagPDw== gceadmin@SOURCE-WINDOWS
  :/usr/share/google/get_metadata_value authorized_keys
- :/usr/bin/diff -su /root/tmp-gee-87059.8086936.59121/authkeys1 /root/tmp-gee-87059.8086936.59121/authkeys2
-Files /root/tmp-gee-87059.8086936.59121/authkeys1 and /root/tmp-gee-87059.8086936.59121/authkeys2 are identical
- :rm -f /root/tmp-gee-87059.8086936.59121/authkeys1 /root/tmp-gee-87059.8086936.59121/authkeys2
+traceroute to apis.google.com (173.194.66.138), 30 hops max, 60 byte packets :/usr/bin/diff -su /root/tmp-gee-769220.82768633.33139/authkeys1 /root/tmp-gee-769220.82768633.33139/authkeys2
+Files /root/tmp-gee-769220.82768633.33139/authkeys1 and /root/tmp-gee-769220.82768633.33139/authkeys2 are identical
+ :rm -f /root/tmp-gee-769220.82768633.33139/authkeys1 /root/tmp-gee-769220.82768633.33139/authkeys2
  :grep -qw authkeys
  :echo
  :[ 1 = 1 ]
@@ -81,14 +91,36 @@ Files /root/tmp-gee-87059.8086936.59121/authkeys1 and /root/tmp-gee-87059.808693
  :l1=UID_MAX			60000
  :cut -d : -f 6
  :awk -F: -v min=			 1000 -v max=			60000 { if ( $3 >= min && $3 <= max ) print $0} /etc/passwd
- :HOMEDIRS=/home/testuser
+ :HOMEDIRS=/home/cpst
+/home/josselinc
+/home/sub
+/home/ricc
+/home/gceadmin
  :read homedir
-/home/testuser
+ :echo /home/cpst
+/home/josselinc
+/home/sub
+/home/ricc
+/home/gceadmin
+ :ssh-keygen -lf /home/cpst/.ssh/authorized_keys
+1024 ed:f2:bd:d9:02:b0:32:b9:2b:36:e8:ea:84:04:14:c4  cloud-platform-support-team@google (DSA)
  :[ -f /home/cpst/.ssh/authorized_keys2 ]
  :read homedir
- :ssh-keygen -lf /home/testuser/.ssh/authorized_keys
-2048 60:cd:44:b4:67:d0:7f:b6:04:b0:37:88:28:ba:4e:fc  testuser@testuser-at-home.com (RSA)
+ :ssh-keygen -lf /home/josselinc/.ssh/authorized_keys
+2048 60:cd:44:b4:67:d0:7f:b6:04:b0:37:88:28:ba:4e:fc  josselinc@josselinc-m91-l.syd.corp.google.com (RSA)
+ :[ -f /home/josselinc/.ssh/authorized_keys2 ]
+ :read homedir
+ :ssh-keygen -lf /home/sub/.ssh/authorized_keys
+1024 41:0f:37:2a:4c:83:fd:c6:09:e2:e0:1f:b5:b6:8f:1c  sub@submonster.syd.corp.google.com (DSA)
+ :[ -f /home/sub/.ssh/authorized_keys2 ]
+ :read homedir
+ :ssh-keygen -lf /home/ricc/.ssh/authorized_keys
+2048 04:6e:2c:6d:34:f7:30:89:21:c6:3c:a3:a0:d4:3f:31  ricc@derek.dub.corp.google.com (RSA)
  :[ -f /home/ricc/.ssh/authorized_keys2 ]
+ :read homedir
+ :ssh-keygen -lf /home/gceadmin/.ssh/authorized_keys
+2048 48:d5:a3:e7:bb:66:2c:41:3a:14:ed:39:61:01:08:ec  gceadmin@SOURCE-WINDOWS (RSA)
+ :[ -f /home/gceadmin/.ssh/authorized_keys2 ]
  :read homedir
  :grep -qw sshdconf
  :echo
@@ -100,7 +132,7 @@ Files /root/tmp-gee-87059.8086936.59121/authkeys1 and /root/tmp-gee-87059.808693
  :grep -v Port
  :egrep -v ^#|^$ /etc/ssh/sshd_config
  :cat
- :SSHD_OPTIONS=-d -f /root/tmp-gee-87059.8086936.59121/ssh/sshd_config -o 'AuthorizedKeysFile /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys'
+ :SSHD_OPTIONS=-d -f /root/tmp-gee-769220.82768633.33139/ssh/sshd_config -o 'AuthorizedKeysFile /root/tmp-gee-769220.82768633.33139/ssh/authorized_keys'
  :grep -qw sshd
  :echo
  :[ 1 = 1 ]
@@ -109,27 +141,29 @@ drwx------ 2 root root ? 4096 Jun 25 10:50 /root/.ssh
  :ls -lZ /root/.ssh
  :grep -v debug1: rexec_argv
  :xargs timeout 5m /usr/sbin/sshd
- :echo -d -f /root/tmp-gee-87059.8086936.59121/ssh/sshd_config -o 'AuthorizedKeysFile /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys'
+ :echo -d -f /root/tmp-gee-769220.82768633.33139/ssh/sshd_config -o 'AuthorizedKeysFile /root/tmp-gee-769220.82768633.33139/ssh/authorized_keys'
 total 8
 -rw-r--r-- 1 root root ?   1 Jun 25 10:50 authorized_keys2
 -rw-r--r-- 1 root root ? 222 Jun 24 13:45 known_hosts
- :KEY=/root/tmp-gee-87059.8086936.59121/ssh/test-key
- :ssh-keygen -q -f /root/tmp-gee-87059.8086936.59121/ssh/test-key -N  -t dsa -V +2m
+ :KEY=/root/tmp-gee-769220.82768633.33139/ssh/test-key
+ :ssh-keygen -q -f /root/tmp-gee-769220.82768633.33139/ssh/test-key -N  -t dsa -V +2m
+
+ 1  we-in-f138.1e100.net (173.194.66.138)  2.358 ms  2.334 ms  2.324 ms
  :echo -e \n\n
  :echo -n from="127.0.0.1",command="/bin/echo" 
- :cat /root/tmp-gee-87059.8086936.59121/ssh/test-key.pub
- :chmod 0600 /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys
- :ssh -v -p 3562 -i /root/tmp-gee-87059.8086936.59121/ssh/test-key -o StrictHostKeyChecking=no localhost echo 2>&1
+ :cat /root/tmp-gee-769220.82768633.33139/ssh/test-key.pub
+ :chmod 0600 /root/tmp-gee-769220.82768633.33139/ssh/authorized_keys
+ :ssh -v -p 3562 -i /root/tmp-gee-769220.82768633.33139/ssh/test-key -o StrictHostKeyChecking=no localhost echo 2>&1
 OpenSSH_6.0p1 Debian-4+deb7u1, OpenSSL 1.0.1e 11 Feb 2013
 debug1: Reading configuration data /etc/ssh/ssh_config
 debug1: /etc/ssh/ssh_config line 19: Applying options for *
 debug1: Connecting to localhost [127.0.0.1] port 3562.
 debug1: Connection established.
 debug1: permanently_set_uid: 0/0
-debug1: identity file /root/tmp-gee-87059.8086936.59121/ssh/test-key type 2
+debug1: identity file /root/tmp-gee-769220.82768633.33139/ssh/test-key type 2
 debug1: Checking blacklist file /usr/share/ssh/blacklist.DSA-1024
 debug1: Checking blacklist file /etc/ssh/blacklist.DSA-1024
-debug1: identity file /root/tmp-gee-87059.8086936.59121/ssh/test-key-cert type -1
+debug1: identity file /root/tmp-gee-769220.82768633.33139/ssh/test-key-cert type -1
 debug1: Remote protocol version 2.0, remote software version OpenSSH_6.0p1 Debian-4+deb7u1
 debug1: match: OpenSSH_6.0p1 Debian-4+deb7u1 pat OpenSSH*
 debug1: Enabling compatibility mode for protocol 2.0
@@ -152,8 +186,8 @@ debug1: SSH2_MSG_SERVICE_REQUEST sent
 debug1: SSH2_MSG_SERVICE_ACCEPT received
 debug1: Authentications that can continue: publickey
 debug1: Next authentication method: publickey
-debug1: Offering DSA public key: /root/tmp-gee-87059.8086936.59121/ssh/test-key
-debug1: Server accepts key: pkalg ssh-dss blen 434
+debug1: Offering DSA public key: /root/tmp-gee-769220.82768633.33139/ssh/test-key
+debug1: Server accepts key: pkalg ssh-dss blen 433
 debug1: read PEM private key done: type DSA
 debug1: Authentication succeeded (publickey).
 Authenticated to localhost ([127.0.0.1]:3562).
@@ -181,7 +215,7 @@ Server listening on :: port 3562.
 debug1: Server will not fork when running in debugging mode.
 debug1: rexec start in 5 out 5 newsock 5 pipe -1 sock 8
 debug1: inetd sockets after dupping: 3, 3
-Connection from 127.0.0.1 port 50227
+Connection from 127.0.0.1 port 41596
 debug1: Client protocol version 2.0; client software version OpenSSH_6.0p1 Debian-4+deb7u1
 debug1: match: OpenSSH_6.0p1 Debian-4+deb7u1 pat OpenSSH*
 debug1: Enabling compatibility mode for protocol 2.0
@@ -210,31 +244,31 @@ debug1: test whether pkalg/pkblob are acceptable [preauth]
 debug1: Checking blacklist file /usr/share/ssh/blacklist.DSA-1024
 debug1: Checking blacklist file /etc/ssh/blacklist.DSA-1024
 debug1: temporarily_use_uid: 0/0 (e=0/0)
-debug1: trying public key file /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys
+debug1: trying public key file /root/tmp-gee-769220.82768633.33139/ssh/authorized_keys
 debug1: fd 4 clearing O_NONBLOCK
-debug1: matching key found: file /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys, line 1
-Found matching DSA key: 2c:31:2c:38:36:ca:8e:d8:a0:1a:3e:25:ef:0d:5c:d0
+debug1: matching key found: file /root/tmp-gee-769220.82768633.33139/ssh/authorized_keys, line 1
+Found matching DSA key: 41:4d:9e:ee:6d:c3:ff:46:25:81:f0:14:e3:fc:e1:8a
 debug1: restore_uid: 0/0
-Postponed publickey for root from 127.0.0.1 port 50227 ssh2 [preauth]
+Postponed publickey for root from 127.0.0.1 port 41596 ssh2 [preauth]
 debug1: userauth-request for user root service ssh-connection method publickey [preauth]
 debug1: attempt 2 failures 0 [preauth]
 debug1: Checking blacklist file /usr/share/ssh/blacklist.DSA-1024
 debug1: Checking blacklist file /etc/ssh/blacklist.DSA-1024
 debug1: temporarily_use_uid: 0/0 (e=0/0)
-debug1: trying public key file /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys
+debug1: trying public key file /root/tmp-gee-769220.82768633.33139/ssh/authorized_keys
 debug1: fd 4 clearing O_NONBLOCK
-debug1: matching key found: file /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys, line 1
-Found matching DSA key: 2c:31:2c:38:36:ca:8e:d8:a0:1a:3e:25:ef:0d:5c:d0
+debug1: matching key found: file /root/tmp-gee-769220.82768633.33139/ssh/authorized_keys, line 1
+Found matching DSA key: 41:4d:9e:ee:6d:c3:ff:46:25:81:f0:14:e3:fc:e1:8a
 debug1: restore_uid: 0/0
 debug1: ssh_dss_verify: signature correct
 Root login accepted for forced command.
 debug1: do_pam_account: called
-Accepted publickey for root from 127.0.0.1 port 50227 ssh2
+Accepted publickey for root from 127.0.0.1 port 41596 ssh2
 Root login accepted for forced command. [preauth]
 debug1: monitor_read_log: child log fd closed
 debug1: monitor_child_preauth: root has been authenticated by privileged process
 debug1: PAM: establishing credentials
-debug1: Entering interactive session for SSH2debug1: Remote: Forced command.
+debug1: Entering interactive session debug1: Remote: Forced command.
 debug1: Remote: Forced command.
 debug1: Sending environment.
 debug1: Sending command: echo 2>&1
@@ -248,8 +282,8 @@ Environment:
   PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11
   MAIL=/var/mail/root
   SHELL=/bin/bash
-  SSH_CLIENT=127.0.0.1 50227 3562
-  SSH_CONNECTION=127.0.0.1 50227 127.0.0.1 3562
+  SSH_CLIENT=127.0.0.1 41596 3562
+  SSH_CONNECTION=127.0.0.1 41596 127.0.0.1 3562
   SSH_ORIGINAL_COMMAND=echo 2>&1
 
 debug1: client_input_channel_req: channel 0 rtype exit-status reply 0
@@ -257,12 +291,12 @@ debug1: client_input_channel_req: channel 0 rtype eow@openssh.com reply 0
 debug1: channel 0: free: client-session, nchannels 1
 debug1: fd 1 clearing O_NONBLOCK
 Transferred: sent 2728, received 2976 bytes, in 0.0 seconds
-Bytes per second: sent 67784.7, received 73947.0
+Bytes per second: sent 67913.1, received 74087.0
 debug1: Exit status 0
  :echo >>> SSH localhost login succcess
 >>> SSH localhost login succcess
- :rm -f /root/tmp-gee-87059.8086936.59121/ssh/test-key /root/tmp-gee-87059.8086936.59121/ssh/test-key.pub
-.
+ :rm -f /root/tmp-gee-769220.82768633.33139/ssh/test-key /root/tmp-gee-769220.82768633.33139/ssh/test-key.pub
+for SSH2.
 debug1: server_init_dispatch_20
 debug1: server_input_channel_open: ctype session rchan 0 win 2097152 max 32768
 debug1: input_session_request
@@ -277,8 +311,8 @@ debug1: session_by_channel: session 0 channel 0
 debug1: session_input_channel_req: session 0 req exec
 debug1: Forced command (config) '/bin/echo'
 debug1: Received SIGCHLD.
-debug1: session_by_pid: pid 17062
-debug1: session_exit_message: session 0 channel 0 pid 17062
+debug1: session_by_pid: pid 12605
+debug1: session_exit_message: session 0 channel 0 pid 12605
 debug1: session_exit_message: release channel 0
 Received disconnect from 127.0.0.1: 11: disconnected by user
 debug1: do_cleanup
@@ -286,8 +320,8 @@ debug1: PAM: cleanup
 debug1: PAM: closing session
 debug1: PAM: deleting credentials
 xargs: timeout: exited with status 255; aborting
- :rm -f /root/tmp-gee-87059.8086936.59121/ssh/sshd_config
- :rm -f /root/tmp-gee-87059.8086936.59121/ssh/authorized_keys
+ :rm -f /root/tmp-gee-769220.82768633.33139/ssh/sshd_config
+ :rm -f /root/tmp-gee-769220.82768633.33139/ssh/authorized_keys
  :echo
 
  :grep -qw sys
@@ -321,9 +355,9 @@ LABEL=/   /     ext4    defaults,barrier=0 1 1
 
  :/bin/df -l -x tmpfs -P
 Filesystem                                             1024-blocks   Used Available Capacity Mounted on
-rootfs                                                    10320184 833996   8961952       9% /
+rootfs                                                    10320184 835912   8960036       9% /
 udev                                                         10240      0     10240       0% /dev
-/dev/disk/by-uuid/db891c02-ae4f-4d0e-871d-1e86892fbb81    10320184 833996   8961952       9% /
+/dev/disk/by-uuid/db891c02-ae4f-4d0e-871d-1e86892fbb81    10320184 835912   8960036       9% /
  :ls /
 authorized_keys
 bin
@@ -350,11 +384,11 @@ var
 vmlinuz
  :free -k
              total       used       free     shared    buffers     cached
-Mem:       3803636     451864    3351772          0      43736     302696
--/+ buffers/cache:     105432    3698204
+Mem:       3803636     536856    3266780          0     130252     304728
+-/+ buffers/cache:     101876    3701760
 Swap:            0          0          0
  :/usr/bin/uptime
- 12:23:38 up 1 day, 11 min,  2 users,  load average: 0.00, 0.01, 0.05
+ 09:53:27 up 8 days, 21:40,  1 user,  load average: 0.05, 0.03, 0.05
  :echo
 
  :grep -qw usersec
@@ -362,47 +396,16 @@ Swap:            0          0          0
  :[ 1 = 1 ]
  :echo ### Users and security
 ### Users and security
- :cat /etc/passwd
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/bin/sh
-bin:x:2:2:bin:/bin:/bin/sh
-sys:x:3:3:sys:/dev:/bin/sh
-sync:x:4:65534:sync:/bin:/bin/sync
-games:x:5:60:games:/usr/games:/bin/sh
-man:x:6:12:man:/var/cache/man:/bin/sh
-lp:x:7:7:lp:/var/spool/lpd:/bin/sh
-mail:x:8:8:mail:/var/mail:/bin/sh
-news:x:9:9:news:/var/spool/news:/bin/sh
-uucp:x:10:10:uucp:/var/spool/uucp:/bin/sh
-proxy:x:13:13:proxy:/bin:/bin/sh
-www-data:x:33:33:www-data:/var/www:/bin/sh
-backup:x:34:34:backup:/var/backups:/bin/sh
-list:x:38:38:Mailing List Manager:/var/list:/bin/sh
-irc:x:39:39:ircd:/var/run/ircd:/bin/sh
-gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/bin/sh
-nobody:x:65534:65534:nobody:/nonexistent:/bin/sh
-libuuid:x:100:101::/var/lib/libuuid:/bin/sh
-ntp:x:101:103::/home/ntp:/bin/false
-sshd:x:102:65534::/var/run/sshd:/usr/sbin/nologin
-testuser:x:1001:1001::/home/testuser:/bin/bash
  :md5sum /usr/share/google/google_daemon/manage_accounts.py
 04273c8e606f249a72aa661235571429  /usr/share/google/google_daemon/manage_accounts.py
  :ps -C manage_accounts.py -C startpar uw
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root      2056  0.0  0.0   4096   624 ?        Ss   Jun24   0:00 startpar -f -- google-accounts-manager
-root      2059  0.0  0.1  47160  7228 ?        S    Jun24   0:00 /usr/bin/python /usr/share/google/google_daemon/manage_accounts.py --daemon
-root     16972  0.0  0.2  47860  8648 ?        S    12:21   0:00 /usr/bin/python /usr/share/google/google_daemon/manage_accounts.py --daemon
+root      2059  0.0  0.1  47160  7228 ?        S    Jun24   0:01 /usr/bin/python /usr/share/google/google_daemon/manage_accounts.py --daemon
+root     12511  0.0  0.2  47860  8648 ?        S    09:50   0:00 /usr/bin/python /usr/share/google/google_daemon/manage_accounts.py --daemon
  :/usr/sbin/visudo -c
 /etc/sudoers: parsed OK
 /etc/sudoers.d/README: parsed OK
- :egrep -v ^#|^$
- :cat /etc/sudoers
-Defaults	env_reset
-Defaults	mail_badpass
-Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-root	ALL=(ALL:ALL) ALL
-%sudo	ALL=(ALL:ALL) ALL
-testuser ALL=NOPASSWD: ALL
  :egrep -v ^#|^$
  :cat /etc/selinux/semanage.conf
 module-store = direct
@@ -411,44 +414,49 @@ module-store = direct
  :echo 60000
  :/usr/bin/faillog -a -u 1000-60000
 Login       Failures Maximum Latest                   On
-testuser       0        0   01/01/70 00:00:00 +0000  
+cpst            0        0   01/01/70 00:00:00 +0000  
+josselinc       0        0   01/01/70 00:00:00 +0000  
+sub             0        0   01/01/70 00:00:00 +0000  
+ricc            0        0   01/01/70 00:00:00 +0000  
+gceadmin        0        0   01/01/70 00:00:00 +0000  
+ :[ 0 = 1 ]
  :grep -qw traceroute
  :echo
  :[ 1 = 1 ]
  :/usr/sbin/traceroute -n au.pool.ntp.org
-traceroute to au.pool.ntp.org (202.127.210.37), 30 hops max, 60 byte packets
- 1  216.239.47.74  365.395 ms 209.85.248.70  370.685 ms 216.239.47.86  0.951 ms
- 2  216.239.47.76  357.385 ms 216.239.47.74  365.217 ms 209.85.248.70  372.218 ms
- 3  216.239.47.74  365.398 ms  366.948 ms 209.85.248.70  371.261 ms
- 4  216.239.47.76  359.136 ms 216.239.47.86  0.899 ms 209.85.248.70  370.874 ms
- 5  216.239.47.76  357.644 ms 216.239.47.74  365.012 ms 216.239.47.76  358.453 ms
- 6  216.239.47.86  0.882 ms 216.239.47.74  366.361 ms 216.239.47.86  0.566 ms
- 7  216.239.47.76  357.867 ms 216.239.47.86  7.280 ms 216.239.47.74  364.303 ms
- 8  209.85.248.70  369.872 ms  369.632 ms 216.239.47.74  364.880 ms
- 9  66.249.95.172  6.691 ms 72.14.238.17  6.414 ms 72.14.242.167  6.338 ms
-10  72.14.235.89  89.387 ms  89.458 ms 64.233.175.38  89.281 ms
-11  209.85.246.37  110.783 ms  110.764 ms 72.14.232.73  107.724 ms
-12  72.14.239.209  144.059 ms  143.777 ms  143.968 ms
-13  72.14.239.12  143.762 ms 209.85.250.126  144.613 ms 72.14.239.12  143.825 ms
-14  72.14.233.165  144.166 ms  144.357 ms 72.14.238.131  144.645 ms
-15  209.85.250.124  259.703 ms 209.85.250.228  260.051 ms 209.85.250.124  261.982 ms
-16  66.249.95.167  370.679 ms 209.85.249.53  363.461 ms 66.249.95.167  358.571 ms
-17  66.249.95.225  361.676 ms 66.249.95.233  358.490 ms  358.021 ms
-18  202.7.171.189  368.117 ms  366.640 ms 203.26.20.253  362.967 ms
-19  203.219.35.15  362.448 ms  362.565 ms 203.26.22.61  362.116 ms
-20  203.161.136.1  362.992 ms  365.771 ms 203.219.35.79  360.261 ms
-21  121.101.138.212  366.064 ms  366.253 ms 203.161.136.1  362.778 ms
-22  121.101.138.212  366.099 ms  365.864 ms 121.101.138.171  370.846 ms
-23  121.101.138.171  372.755 ms 121.101.138.156  377.219 ms  377.065 ms
-24  121.101.138.207  375.652 ms  376.341 ms 121.101.138.156  378.001 ms
-25  203.161.146.182  377.256 ms  376.407 ms 121.101.138.207  372.891 ms
-26  203.161.146.182  376.917 ms *  373.996 ms
+traceroute to au.pool.ntp.org (27.116.36.36), 30 hops max, 60 byte packets
+ 1  216.239.47.86  1.434 ms 209.85.250.162  1.401 ms  1.157 ms
+ 2  216.239.47.86  1.385 ms 209.85.248.100  342.027 ms  341.876 ms
+ 3  209.85.250.162  1.124 ms 216.239.47.86  1.364 ms 209.85.250.162  1.360 ms
+ 4  209.85.250.162  1.121 ms 209.85.248.70  345.069 ms  345.256 ms
+ 5  209.85.248.100  342.322 ms 209.85.248.70  344.729 ms  345.521 ms
+ 6  209.85.248.70  345.662 ms 209.85.250.162  0.810 ms  0.774 ms
+ 7  216.239.47.86  0.774 ms 209.85.248.100  341.194 ms 216.239.47.86  0.900 ms
+ 8  209.85.248.70  344.671 ms 216.239.47.86  0.766 ms 209.85.248.70  344.515 ms
+ 9  72.14.238.17  6.557 ms 72.14.242.167  6.536 ms 72.14.238.17  6.352 ms
+10  64.233.175.36  89.812 ms 64.233.175.38  89.166 ms 72.14.235.91  90.070 ms
+11  72.14.235.12  89.374 ms  89.339 ms 66.249.95.229  90.071 ms
+12  216.239.48.4  96.567 ms 72.14.238.88  96.730 ms 216.239.48.4  96.472 ms
+13  72.14.239.81  207.465 ms  159.812 ms 72.14.239.83  159.545 ms
+14  72.14.238.187  339.418 ms  339.517 ms  339.236 ms
+15  66.249.95.233  341.471 ms  341.181 ms 66.249.95.235  338.130 ms
+16  103.26.68.73  351.066 ms  351.440 ms  351.329 ms
+17  * * *
+18  * * *
+19  * * *
+20  * * *
+21  * * *
+22  * * *
+23  * * *
+24  * * *
+25  * * *
+26  * * *
 27  * * *
 28  * * *
 29  * * *
 30  * * *
  :echo
 
- :rm -rf /root/tmp-gee-87059.8086936.59121
+ :rm -rf /root/tmp-gee-769220.82768633.33139
  :echo ### == DONE ==
 ### == DONE ==
