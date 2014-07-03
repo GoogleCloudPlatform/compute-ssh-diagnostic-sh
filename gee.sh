@@ -28,6 +28,7 @@
 # the flags are not handled with getops to remain POSIX and portable
 OUTPUT=default
 FORCE=0
+SECAT=0
 VERBOSE=1
 while test $# -gt 0 ; do
 
@@ -37,6 +38,7 @@ while test $# -gt 0 ; do
      echo "-h This help"
      echo "-f force to run without UID 0 (root)"
      echo "-v verbose output of each command"
+     echo "-s log passwd and sudoers"
      echo "--out=/tmp/logfile full path of the output file,"
      echo "      /dev/kmesg console if unspecified."
      echo "--skip=[network,metadata,authkeys,sshdconf,sshd,sys,usersec,traceroute]"
@@ -45,6 +47,7 @@ while test $# -gt 0 ; do
   fi;
   if test "$1" = "-f" ; then FORCE=1 ; shift ; continue; fi;
   if test "$1" = "-v" ; then VERBOSE=1 ; shift ; continue; fi;
+  if test "$1" = "-s" ; then SECAT=1 ; shift ; continue; fi;
 
   # options with arguments
   case "$1" in
@@ -216,14 +219,16 @@ fi;
 echo $SKIP | grep -qw "usersec"
 if [ $? = 1 ]; then
   echo '### Users and security'
-  cat /etc/passwd
   md5sum /usr/share/google/google_daemon/manage_accounts.py
   ps -C manage_accounts.py -C startpar uw
   /usr/sbin/visudo -c
-  cat /etc/sudoers | egrep -v '^#|^$'
   cat /etc/selinux/semanage.conf | egrep -v '^#|^$'
   if [ -f /usr/bin/faillog ]; then
     /usr/bin/faillog -a -u ${l##UID_MIN}-$(echo ${l1##UID_MAX}) | grep -v '^$'
+  fi;
+  if [ "$SECAT" = "1" ]; then
+    cat /etc/passwd
+    cat /etc/sudoers | egrep -v '^#|^$'
   fi;
 fi;
 # this should be in the network section however since it takes a while
