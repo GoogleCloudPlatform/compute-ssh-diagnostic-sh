@@ -20,6 +20,6 @@ gcloud config set account $ACCOUNT
 gcloud config set project $PROJECT
 gsutil cp gee.sh gs://$BUCKET/gee.sh
 # TODO(sub) auto-generate sample log and provide a flag to do skip it
-#gsutil cp gee_sample_log.txt gs://$BUCKET/gee_sample_log.txt
-gsutil setmeta  -h "Cache-Control:public, max-age=0, no-transform" gs://$BUCKET/gee.sh # gs://$BUCKET/gee_sample_log.txt
-gsutil acl set public-read gs://$BUCKET/gee.sh # gs://$BUCKET/gee_sample_log.txt
+gsutil cp gee_sample_log.txt gs://$BUCKET/gee_sample_log.txt
+gsutil setmeta  -h "Cache-Control:public, max-age=0, no-transform" gs://$BUCKET/gee.sh gs://$BUCKET/gee_sample_log.txt
+gsutil acl set public-read gs://$BUCKET/gee.sh gs://$BUCKET/gee_sample_log.txt
