@@ -4,39 +4,38 @@ Self diagnosis tool to identify issues with SSH login/accessibility of your linu
 
 ### Usage
 
-Note: ideally you should provide --zone=[zone of the instance] to avoid zone lookups
-or specify --zone=[your default zone] in ~/.gcutil.flags if you are consistently working with the same zone
+Note: ideally you should provide --zone [zone of the instance] to avoid zone lookups
+or specify gcloud config set compute/zone [zone_name]
 
 #### for an existing instance
 ```
-gcutil getinstance [instance_name] | grep metadata-fingerprint
+gcloud compute instances add-metadata [instance_name] --metadata startup-script-url=http://storage.googleapis.com/gce-scripts/gee.sh
 ```
+WARNING: the following command will reboot the machine
+if uptime is a concern you should snapshot and clone your
+disk and instance with the startup-script specified instead
+:
 
 ```
-gcutil setinstancemetadata [instance_name]  --metadata="startup-script-url:http://storage.googleapis.com/gce-scripts/gee.sh" --fingerprint=[hash_from_the_previous_command_output]
-```
-WARNING: the following command will reboot the machine:
-
-```
-gcutil resetinstance [instance_name]
+gcloud compute instances reset [instance_name]
 ```
 
 if this fails with resource not ready you need to delete the instance keeping the disk take note of the instance configuration than recreate the instance with
 
 ```
-gcutil getinstance [instance_name]
-gcutil deleteinstance [instance_name] --nodelete_boot_pd
-gcutil addinstance --disk='[instance_disk_name],boot' --metadata=startup-script-url:http://storage.googleapis.com/gce-scripts/gee.sh
+gcloud compute instances describe [instance_name]
+gcloud compute instances delete [instance_name] --keep-disks all
+ gcloud compute instances create new1 --disk boot=yes name=[instance_disk_name] --metadata startup-script-url=http://storage.googleapis.com/gce-scripts/gee.sh
 ```
 
 #### for a new instance
 ```
-gcutil addinstance [instance_name] --metadata=startup-script-url:http://storage.googleapis.com/gce-scripts/gee.sh
+gcloud compute instances create [instance_name] --metadata startup-script-url=http://storage.googleapis.com/gce-scripts/gee.sh
 ```
 
 #### You can inspect the output with
 ```
-gcutil getserialportoutput [instance_name]
+gcloud compute instances get-serial-port-output [instance_name]
 ```
 once the instance is up.
 
