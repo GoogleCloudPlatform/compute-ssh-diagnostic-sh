@@ -25,7 +25,7 @@ if this fails with resource not ready you need to delete the instance keeping th
 ```
 gcloud compute instances describe [instance_name]
 gcloud compute instances delete [instance_name] --keep-disks all
- gcloud compute instances create new1 --disk boot=yes name=[instance_disk_name] --metadata startup-script-url=http://storage.googleapis.com/gce-scripts/gee.sh
+gcloud compute instances create new1 --disk boot=yes name=[instance_disk_name] --metadata startup-script-url=http://storage.googleapis.com/gce-scripts/gee.sh
 ```
 
 #### for a new instance
