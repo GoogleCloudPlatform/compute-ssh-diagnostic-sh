@@ -39,7 +39,7 @@ while test $# -gt 0 ; do
      echo "-f force to run without UID 0 (root)"
      echo "-v verbose output of each command"
      echo "--out=/tmp/logfile full path of the output file,"
-     echo "      /dev/kmesg console if unspecified."
+     echo "      /dev/kmsg console if unspecified."
      echo "--skip=[network,metadata,authkeys,sshdconf,sshd,sys,usersec,traceroute]"
      echo "      comma separated list of tests to skip."
      exit
