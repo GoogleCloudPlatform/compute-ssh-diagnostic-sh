@@ -70,7 +70,7 @@ fi;
 
 if [ "$OUTPUT" = "default" ]; then
   exec >/dev/kmsg 2>&1
-  /bin/dmesg -n 9
+  /bin/dmesg -n 8
 else
   exec >$OUTPUT 2>&1
 fi;
