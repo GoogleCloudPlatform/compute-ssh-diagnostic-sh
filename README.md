@@ -9,7 +9,7 @@ or specify gcloud config set compute/zone [zone_name]
 
 #### for an existing instance
 ```
-gcloud compute instances add-metadata [instance_name] --metadata startup-script-url=http://storage.googleapis.com/gce-scripts/gee.sh
+gcloud compute instances add-metadata [instance_name] --metadata startup-script-url=http://storage.googleapis.com/[YOUR BUCKET]/gee.sh
 ```
 WARNING: the following command will reboot the machine
 if uptime is a concern you should snapshot and clone your
@@ -25,12 +25,12 @@ if this fails with resource not ready you need to delete the instance keeping th
 ```
 gcloud compute instances describe [instance_name]
 gcloud compute instances delete [instance_name] --keep-disks all
-gcloud compute instances create [instance_name] --disk boot=yes name=[instance_disk_name] --metadata startup-script-url=http://storage.googleapis.com/gce-scripts/gee.sh
+gcloud compute instances create [instance_name] --disk boot=yes name=[instance_disk_name] --metadata startup-script-url=http://storage.googleapis.com/[YOUR BUCKET]/gee.sh
 ```
 
 #### for a new instance
 ```
-gcloud compute instances create [instance_name] --metadata startup-script-url=http://storage.googleapis.com/gce-scripts/gee.sh
+gcloud compute instances create [instance_name] --metadata startup-script-url=http://storage.googleapis.com/[YOUR BUCKET]/gee.sh
 ```
 
 #### You can inspect the output with
